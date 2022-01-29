@@ -1,1 +1,0 @@
-export type TestParameter = [input: any, expectedOutput: any];
