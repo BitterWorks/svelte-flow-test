@@ -1,12 +1,12 @@
 <script>
     import {isActive, url, page, metatags} from '@roxi/routify';
     
-    $: metatags.title = `Pomoly | ${$page.title}`;
+    $: metatags.title = `Frutapp | ${$page.title}`;
 </script>
 
 <nav class="container-fluid">
     <ul>
-    <li><strong>Prueba</strong></li>
+    <li><strong>Frutapp</strong></li>
     </ul>
     <ul>
     <li><a class:secondary={!$isActive('./index')} href={$url('./index')}>Home</a></li>
