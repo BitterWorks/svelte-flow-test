@@ -30,15 +30,8 @@
         <article>
             <h5>{fruit.name}</h5>
             <p>Color: {fruit.color}</p>
-            <p>Cant.: {fruit.amount}</p>
-            <p>
-                Id: {fruit.id}
-                {#if fruit.amount < 4}
-                    <ins>
-                        ¡Quedan pocas!
-                    </ins>
-                {/if}
-            </p>
+            <p class:warning={fruit.amount < 4}>Cant.: {fruit.amount}</p>
+            <p>Id: {fruit.id}</p>
             <button on:click={() => deleteFruit(fruit.id)}>Borrar Fruta</button>
         </article>
     {:else}
@@ -47,7 +40,7 @@
 
 </main>
 <style>
-    ins {
-        margin-left: 1rem;
+    .warning {
+        color: orange;
     }
 </style>
