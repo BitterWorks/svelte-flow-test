@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import Announcement from "../components/index/Announcement.svelte";
+    import Toast from "../components/index/Toast.svelte";
 
     interface Fruit {
         name:   string,
@@ -23,7 +23,7 @@
 </script>
 <main class="container">
 
-    <Announcement />
+    <Toast />
 
 
     {#each fruits as fruit (fruit.id)}
