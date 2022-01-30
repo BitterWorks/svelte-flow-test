@@ -1,6 +1,7 @@
 <script lang="ts">
     import Form from "../components/Form.svelte";
-    import Button from "../components/index/Button.svelte";
+    import EditFruitCard from "../components/index/EditFruitCard.svelte";
+    import FruitCard from "../components/index/FruitCard.svelte";
     import type { Fruit } from "../types/IndexTypes";
 
     let fruits: Fruit[] = [
@@ -9,10 +10,25 @@
         {name: "Grape", color: "Purple", amount: 3, id: 3}
     ];
 
-    function deleteFruit(id: number): void{
+    let editing: number[] = [];
+
+    function deleteFruit(e: CustomEvent): void{
+        const id = e.detail;
         fruits = fruits.filter((fruit) => fruit.id != id);
     };
-
+    function saveEdit(e: CustomEvent): void{
+        const fruit = e.detail;
+        fruits = [fruit, ...fruits.filter(item => item.id != fruit.id)];
+        editing = editing.filter(id => id != fruit.id);
+    };
+    function undoEdit(e: CustomEvent): void{
+        const fruitId = e.detail;
+        editing = editing.filter(id => id != fruitId);
+    };
+    function editMode(e:CustomEvent): void{
+        const fruitId = e.detail;
+        editing = [fruitId, ...editing];
+    };
     function addFood(e: CustomEvent): void{
         const fruit = e.detail;
         fruits = [fruit, ...fruits];
@@ -24,28 +40,24 @@
     <Form on:addFruit={addFood}/>
 
     {#each fruits as fruit (fruit.id)}
-        <article>
-            <h5>{fruit.name}</h5>
-            <p>Color: {fruit.color}</p>
-            <p class:warning={fruit.amount < 4}>Cant.: {fruit.amount}</p>
-            <p>Id: {fruit.id}</p>
-            <div class="buttons">
-                <Button
-                iconName={"trash"}
-                on:click|once={() => deleteFruit(fruit.id)}
-                />
-                <Button
-                iconName={"edit"}
-                />
-            </div>
-        </article>
+        {#if editing.includes(fruit.id)}
+            <EditFruitCard
+            {fruit}
+            on:saveEdit={saveEdit}
+            on:undoEdit={undoEdit}
+            />
+        {:else}
+            <FruitCard
+                {fruit}
+                on:deleteFruit={deleteFruit}
+                on:editMode={editMode}
+            />
+        {/if}
     {:else}
         <p>Todavía no hay frutas</p>
     {/each}
 
 </main>
 <style>
-    .warning {
-        color: orange;
-    }
+    
 </style>

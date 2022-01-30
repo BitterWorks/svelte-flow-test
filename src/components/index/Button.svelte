@@ -16,7 +16,7 @@
 
 <style>
     button {
-        width: fit-content;
+        width: 49%;
         display: inline;
     }
 
@@ -36,5 +36,14 @@
 
     .edit:hover {
         background-color: rgb(255, 196, 0);
+    }
+
+    .back {
+        background-color: grey;
+        border-color: rgb(177, 177, 177);
+    }
+
+    .back:hover {
+        background-color: rgb(177, 177, 177);
     }
 </style>
