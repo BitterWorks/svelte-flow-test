@@ -1,13 +1,7 @@
 <script lang="ts">
-
-    import Toast from "../components/index/Toast.svelte";
-
-    interface Fruit {
-        name:   string,
-        color?: string,
-        amount: number,
-        id:     number
-    }
+    import Form from "../components/Form.svelte";
+    import Button from "../components/index/Button.svelte";
+    import type { Fruit } from "../types/IndexTypes";
 
     let fruits: Fruit[] = [
         {name: "Manzana", color: "Red", amount: 5, id: 1},
@@ -16,15 +10,18 @@
     ];
 
     function deleteFruit(id: number): void{
-        // Hacer acá el call a borrar la instancia de la fruta
         fruits = fruits.filter((fruit) => fruit.id != id);
-        console.log(fruits);
     };
+
+    function addFood(e: CustomEvent): void{
+        const fruit = e.detail;
+        fruits = [fruit, ...fruits];
+    };
+
 </script>
 <main class="container">
 
-    <Toast />
-
+    <Form on:addFruit={addFood}/>
 
     {#each fruits as fruit (fruit.id)}
         <article>
@@ -32,7 +29,15 @@
             <p>Color: {fruit.color}</p>
             <p class:warning={fruit.amount < 4}>Cant.: {fruit.amount}</p>
             <p>Id: {fruit.id}</p>
-            <button on:click={() => deleteFruit(fruit.id)}>Borrar Fruta</button>
+            <div class="buttons">
+                <Button
+                iconName={"trash"}
+                on:click|once={() => deleteFruit(fruit.id)}
+                />
+                <Button
+                iconName={"edit"}
+                />
+            </div>
         </article>
     {:else}
         <p>Todavía no hay frutas</p>
