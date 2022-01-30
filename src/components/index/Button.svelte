@@ -22,10 +22,19 @@
 
     .trash {
         background-color: darkred;
-        border-color: rgb(177, 0, 0);
+        border-color: rgb(168, 0, 0);
     }
 
     .trash:hover {
         background-color: rgb(192, 3, 3);
+    }
+
+    .edit {
+        background-color: orange;
+        border-color: rgb(255, 157, 0);
+    }
+
+    .edit:hover {
+        background-color: rgb(255, 196, 0);
     }
 </style>
