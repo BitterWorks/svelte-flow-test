@@ -1,61 +1,44 @@
 <script lang="ts">
+    import { query } from 'svelte-apollo';
+
     import Form from "../components/Form.svelte";
     import EditFruitCard from "../components/index/EditFruitCard.svelte";
     import FruitCard from "../components/index/FruitCard.svelte";
+    import FruitCards from '../components/index/FruitCards.svelte';
+    import { GET_FRUITS } from '../graphql/queries/Index';
     import type { Fruit } from "../types/IndexTypes";
 
-    let fruits: Fruit[] = [
-        {name: "Manzana", color: "Red", amount: 5, id: 1},
-        {name: "Banana", color: "Yellow", amount: 1, id: 2},
-        {name: "Grape", color: "Purple", amount: 3, id: 3}
-    ];
+    let fruitsQuery = query(GET_FRUITS);
+    let fruits: Fruit[];
 
-    let editing: number[] = [];
-
-    function deleteFruit(e: CustomEvent): void{
-        const id = e.detail;
-        fruits = fruits.filter((fruit) => fruit.id != id);
+    function toFruitFormat(item: any): Fruit{
+        return {
+            name: item.name,
+            id: item.id,
+            amount: item.amount,
+            color: item.color.name
+        }
     };
-    function saveEdit(e: CustomEvent): void{
-        const fruit = e.detail;
-        fruits = [fruit, ...fruits.filter(item => item.id != fruit.id)];
-        editing = editing.filter(id => id != fruit.id);
-    };
-    function undoEdit(e: CustomEvent): void{
-        const fruitId = e.detail;
-        editing = editing.filter(id => id != fruitId);
-    };
-    function editMode(e:CustomEvent): void{
-        const fruitId = e.detail;
-        editing = [fruitId, ...editing];
+    function toFruitArray(JSONData: any[]): Fruit[]{
+        return JSONData.map((item) => toFruitFormat(item));
     };
     function addFood(e: CustomEvent): void{
         const fruit = e.detail;
         fruits = [fruit, ...fruits];
-    };
+    };    
 
 </script>
 <main class="container">
 
     <Form on:addFruit={addFood}/>
 
-    {#each fruits as fruit (fruit.id)}
-        {#if editing.includes(fruit.id)}
-            <EditFruitCard
-            {fruit}
-            on:saveEdit={saveEdit}
-            on:undoEdit={undoEdit}
-            />
-        {:else}
-            <FruitCard
-                {fruit}
-                on:deleteFruit={deleteFruit}
-                on:editMode={editMode}
-            />
+    {#await $fruitsQuery}
+        Loading...
+    {:then result}
+        {#if result.data}
+            <FruitCards fruits={toFruitArray(result.data.fruits)} />
         {/if}
-    {:else}
-        <p>Todavía no hay frutas</p>
-    {/each}
+    {/await}
 
 </main>
 <style>

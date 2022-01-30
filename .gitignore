@@ -1,4 +1,5 @@
 /node_modules/
+/.devcontainer/
 /dist/
 /.vscode/
 .DS_Store
