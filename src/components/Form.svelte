@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Fruit } from "../types/IndexTypes";
+    import type { Fruit } from "../types/Index";
     
     import { createEventDispatcher } from "svelte";
 
@@ -12,8 +12,7 @@
         const fruit: Fruit = {
             name: name,
             color: color,
-            amount: amount,
-            id: Math.random()
+            amount: amount
         };
         dispatch("addFruit", fruit);
     };

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Fruit } from "../../types/IndexTypes";
+    import type { Fruit } from "../../types/Index";
 
     import EditFruitCard from "./EditFruitCard.svelte";
     import FruitCard from "./FruitCard.svelte";
@@ -10,7 +10,7 @@
 
     function deleteFruit(e: CustomEvent): void{
         const id = e.detail;
-        fruits = fruits.filter((fruit) => fruit.id != id);
+        // fruits = fruits.filter((fruit) => fruit.id != id);
     };
     function saveEdit(e: CustomEvent): void{
         // const fruit = e.detail;
