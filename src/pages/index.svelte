@@ -6,7 +6,7 @@
     import FruitCard from "../components/index/FruitCard.svelte";
     import FruitCards from '../components/index/FruitCards.svelte';
     import { GET_FRUITS } from '../graphql/queries/Index';
-    import type { Fruit } from "../types/IndexTypes";
+    import type { Fruit } from "../types/Index";
 
     let fruitsQuery = query(GET_FRUITS);
     let fruits: Fruit[];
