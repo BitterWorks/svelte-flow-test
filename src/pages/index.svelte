@@ -10,7 +10,7 @@
     let getFruitsQuery: ReadableQuery<FruitsQuery<Fruit[]>> = query(GET_FRUITS);
     let createFruitQuery = mutation(ADD_FRUIT);
 
-    async function addFood(e: CustomEvent){
+    async function addFruit(e: CustomEvent){
         try {
             await createFruitQuery({variables: {
                 fruitName: e.detail.name,
@@ -26,7 +26,7 @@
 </script>
 <main class="container">
 
-    <Form on:addFruit={addFood}/>
+    <Form on:addFruit={addFruit}/>
 
     {#await $getFruitsQuery}
         Loading...
