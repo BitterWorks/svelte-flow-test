@@ -1,14 +1,14 @@
 <script lang="ts">
-    import { query } from 'svelte-apollo';
+    import { query, ReadableQuery } from 'svelte-apollo';
 
     import Form from "../components/Form.svelte";
     import FruitCards from '../components/index/FruitCards.svelte';
     import { GET_FRUITS } from '../graphql/queries/Index';
-    import type { Fruit } from "../types/Index";
+    import type { Fruit, FruitsQuery } from "../types/Index";
     import { toFruitArray } from '../utils/Index';
 
 
-    let getFruitsQuery = query(GET_FRUITS);
+    let getFruitsQuery: ReadableQuery<FruitsQuery<Fruit[]>> = query(GET_FRUITS);
     let fruits: Fruit[];
 
     function addFood(e: CustomEvent): void{
