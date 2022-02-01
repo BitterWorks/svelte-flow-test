@@ -1,10 +1,10 @@
 <script lang="ts">
     import { query, ReadableQuery, mutation } from 'svelte-apollo';
+    
     import Form from "../components/Form.svelte";
-    import FruitCards from '../components/index/FruitCards.svelte';
-    import { ADD_FRUIT, GET_FRUITS } from '../graphql/queries/Index';
     import type { Fruit, FruitsQuery } from "../types/Index";
-    import { toFruitArray } from '../utils/Index';
+    import { ADD_FRUIT, GET_FRUITS } from '../graphql/queries/Index';
+    import Fruits from '../components/index/Fruits.svelte';
 
 
     let getFruitsQuery: ReadableQuery<FruitsQuery<Fruit[]>> = query(GET_FRUITS);
@@ -25,18 +25,6 @@
 
 </script>
 <main class="container">
-
     <Form on:addFruit={addFruit}/>
-
-    {#await $getFruitsQuery}
-        Loading...
-    {:then result}
-        {#if result.data}
-            <FruitCards fruits={toFruitArray(result.data.fruits)} />
-        {/if}
-    {/await}
-
+    <Fruits {getFruitsQuery} />
 </main>
-<style>
-    
-</style>
