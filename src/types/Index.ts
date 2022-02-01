@@ -4,3 +4,6 @@ export interface Fruit {
     amount: number,
     id:     number
 };
+export interface FruitsQuery<T> {
+    fruits: T
+};
