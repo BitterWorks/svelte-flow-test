@@ -1,35 +1,37 @@
 <script lang="ts">
-    import type { Fruit } from "../types/Index";
+    import { mutation } from "svelte-apollo";
+
+    import { ADD_FRUIT } from "../graphql/queries/Index";    
+    import type { ReadableQuery } from 'svelte-apollo';
+    import type { Fruit, FruitsQuery } from "../types/Index";
+
+    export let getFruitsQuery: ReadableQuery<FruitsQuery<Fruit[]>>;
+    let createFruitQuery = mutation(ADD_FRUIT);
     
-    import { createEventDispatcher } from "svelte";
-
-
     let name: string;
     let color: string;
     let amount: number;
-
-    function handleSubmit(){
-        const fruit: Fruit = {
-            name: name,
-            color: color,
-            amount: amount
+    async function addFruit(){
+        try {
+            await createFruitQuery({variables: {
+                fruitName: name,
+                color: color,
+                amount: amount
+            }});
+            getFruitsQuery.refetch();
+        } catch {
+            //TODO: toast
         };
-        dispatch("addFruit", fruit);
     };
 
-    let dispatch = createEventDispatcher();
 </script>
 
 <article>
     <h2>Añadí tu Fruta</h2>
-    <form on:submit|preventDefault={handleSubmit}>
+    <form on:submit|preventDefault={addFruit}>
         <input type="text" placeholder="name" bind:value={name}>
         <input type="text" placeholder="color" bind:value={color}>
         <input type="number" placeholder="amount" bind:value={amount}>
         <button>Añadir</button>
     </form>
 </article>
-
-<style>
-
-</style>
