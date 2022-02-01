@@ -1,4 +1,4 @@
-import { Fruit } from "../types/Index";
+import type { Fruit } from "../types/Index";
 
 function toFruitFormat(item: any): Fruit{
     return {
