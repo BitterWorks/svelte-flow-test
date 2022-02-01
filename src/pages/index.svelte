@@ -8,7 +8,7 @@
     import { toFruitArray } from '../utils/Index';
 
 
-    let fruitsQuery = query(GET_FRUITS);
+    let getFruitsQuery = query(GET_FRUITS);
     let fruits: Fruit[];
 
     function addFood(e: CustomEvent): void{
@@ -21,7 +21,7 @@
 
     <Form on:addFruit={addFood}/>
 
-    {#await $fruitsQuery}
+    {#await $getFruitsQuery}
         Loading...
     {:then result}
         {#if result.data}
