@@ -1,6 +1,6 @@
 <script lang="ts">
     import { mutation, ReadableQuery } from 'svelte-apollo';
-    import { UPDATE_FRUIT } from '../../graphql/queries/Index';
+    import { DELETE_FRUIT, UPDATE_FRUIT } from '../../graphql/queries/Index';
     import type { Fruit, FruitsQuery } from "../../types/Index";
 
     import EditFruitCard from "./EditFruitCard.svelte";
@@ -11,10 +11,20 @@
 
     let editing: number[] = [];
     let updateFruitQuery = mutation(UPDATE_FRUIT);
+    let deleteFruitMutation = mutation(DELETE_FRUIT);
 
-    function deleteFruit(e: CustomEvent): void{
+    async function deleteFruit(e: CustomEvent){
+        console.log("Hola")
         const id = e.detail;
-        // fruits = fruits.filter((fruit) => fruit.id != id);
+        try {
+            await deleteFruitMutation({variables: {
+                id: id
+            }});
+            getFruitsQuery.refetch();
+            // TODO: toast
+        } catch {
+            //TODO: toast
+        };
     };
     async function saveEdit(e: CustomEvent){
         const fruit = e.detail;

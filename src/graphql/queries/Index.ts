@@ -43,3 +43,19 @@ export const UPDATE_FRUIT = gql`
         }
     }
 `;
+
+export const DELETE_FRUIT = gql`
+    mutation ($id: ID!) {
+        deleteFruit(data:{
+            id: $id
+        }
+        ){
+            name
+            amount
+            color {
+                name
+            }
+            id
+        }
+    }
+`;
