@@ -13,17 +13,17 @@
         // fruits = fruits.filter((fruit) => fruit.id != id);
     };
     function saveEdit(e: CustomEvent): void{
-        // const fruit = e.detail;
+        const fruit = e.detail;
         // fruits = [fruit, ...fruits.filter(item => item.id != fruit.id)];
         // editing = editing.filter(id => id != fruit.id);
     };
     function undoEdit(e: CustomEvent): void{
-        // const fruitId = e.detail;
-        // editing = editing.filter(id => id != fruitId);
+        const fruitId = e.detail;
+        editing = editing.filter(id => id != fruitId);
     };
     function editMode(e:CustomEvent): void{
-        // const fruitId = e.detail;
-        // editing = [fruitId, ...editing];
+        const fruitId = e.detail;
+        editing = [fruitId, ...editing];
     };
 </script>
 <div>

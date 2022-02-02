@@ -16,7 +16,9 @@ export const GET_FRUITS = gql`
 
 export const ADD_FRUIT = gql`
     mutation ($fruitName: String!, $color: String!, $amount: Int!) {
-        createFruit(name: $fruitName, amount: $amount, color: $color){
+        createFruit(data: {
+            name: $fruitName, amount: $amount, color: $color
+        }){
             name
             amount
             color {
