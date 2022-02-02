@@ -1,13 +1,13 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
-    import type { Fruit } from "../../types/IndexTypes";
+    import type { Fruit } from "../../types/Index";
     import Button from "./Button.svelte";
 
     export let fruit: Fruit;
     let name: string = fruit.name;
     let color: string = fruit.color ? fruit.color : "";
     let amount: number = fruit.amount;
-    const id: number = fruit.id
+    const id: number | any = fruit.id
     const initialName: string = name;
 
     let dispatch = createEventDispatcher();
@@ -29,7 +29,7 @@
     <p>Id: {fruit.id}</p>
     <Button
     iconName={"back"}
-    on:click|once={() => dispatch("undoEdit", fruit.id)}
+    on:click|once={() => dispatch("undoEdit", fruit)}
     />
     <Button
     iconName={"tick"}

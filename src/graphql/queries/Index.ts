@@ -27,3 +27,19 @@ export const ADD_FRUIT = gql`
         }
     }
 `;
+
+export const UPDATE_FRUIT = gql`
+    mutation ($fruitName: String, $color: String, $amount: Int, $id: ID!) {
+        updateFruit(data:{
+            name: $fruitName, amount: $amount, color: $color, id: $id
+        }
+        ){
+            name
+            amount
+            color {
+                name
+            }
+            id
+        }
+    }
+`;

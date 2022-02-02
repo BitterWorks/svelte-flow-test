@@ -1,24 +1,39 @@
 <script lang="ts">
-    import type { Fruit } from "../../types/Index";
+    import { mutation, ReadableQuery } from 'svelte-apollo';
+    import { UPDATE_FRUIT } from '../../graphql/queries/Index';
+    import type { Fruit, FruitsQuery } from "../../types/Index";
 
     import EditFruitCard from "./EditFruitCard.svelte";
     import FruitCard from "./FruitCard.svelte";
 
     export let fruits: Fruit[];
+    export let getFruitsQuery: ReadableQuery<FruitsQuery<Fruit[]>>;
 
     let editing: number[] = [];
+    let updateFruitQuery = mutation(UPDATE_FRUIT);
 
     function deleteFruit(e: CustomEvent): void{
         const id = e.detail;
         // fruits = fruits.filter((fruit) => fruit.id != id);
     };
-    function saveEdit(e: CustomEvent): void{
+    async function saveEdit(e: CustomEvent){
         const fruit = e.detail;
-        // fruits = [fruit, ...fruits.filter(item => item.id != fruit.id)];
-        // editing = editing.filter(id => id != fruit.id);
+        try {
+            await updateFruitQuery({variables: {
+                fruitName: fruit.name,
+                color: fruit.color,
+                amount: fruit.amount,
+                id: fruit.id
+            }});
+            getFruitsQuery.refetch();
+            undoEdit(e);
+            // TODO: toast
+        } catch {
+            //TODO: toast
+        };
     };
     function undoEdit(e: CustomEvent): void{
-        const fruitId = e.detail;
+        const fruitId = e.detail.id;
         editing = editing.filter(id => id != fruitId);
     };
     function editMode(e:CustomEvent): void{

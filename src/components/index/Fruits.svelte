@@ -14,6 +14,9 @@
     Loading...
 {:then result}
     {#if result.data}
-        <FruitCards fruits={toFruitArray(result.data.fruits)} />
+        <FruitCards
+        fruits={toFruitArray(result.data.fruits)}
+        {getFruitsQuery}
+        />
     {/if}
 {/await}
