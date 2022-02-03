@@ -14,7 +14,6 @@
     let deleteFruitMutation = mutation(DELETE_FRUIT);
 
     async function deleteFruit(e: CustomEvent){
-        console.log("Hola")
         const id = e.detail;
         try {
             await deleteFruitMutation({variables: {
