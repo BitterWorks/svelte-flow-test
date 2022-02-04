@@ -1,8 +1,7 @@
 <script lang="ts">
     import type { ReadableQuery } from 'svelte-apollo';
+    
     import type { Fruit, FruitsQuery } from "../../types/Index";
-
-
     import FruitCards from '../../components/index/FruitCards.svelte';
     import { toFruitArray } from '../../utils/Index';
 
@@ -10,13 +9,16 @@
 
     
 </script>
-{#await $getFruitsQuery}
-    Loading...
-{:then result}
-    {#if result.data}
+
+<section id="fruits">
+    {#if $getFruitsQuery.loading}
+        Loading...
+    {:else if $getFruitsQuery.error}
+        Errors
+    {:else if $getFruitsQuery.data}
         <FruitCards
-        fruits={toFruitArray(result.data.fruits)}
+        fruits={toFruitArray($getFruitsQuery.data.fruits)}
         {getFruitsQuery}
         />
     {/if}
-{/await}
+</section>
