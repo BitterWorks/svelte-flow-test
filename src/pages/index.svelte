@@ -1,7 +1,7 @@
 <script lang="ts">
     import { query, ReadableQuery } from 'svelte-apollo';
 
-    import Form from "../components/Form.svelte";
+    import Form from "../components/index/Form.svelte";
     import type { Fruit, FruitsQuery } from "../types/Index";
     import { GET_FRUITS } from '../graphql/queries/Index';
     import Fruits from '../components/index/Fruits.svelte';
