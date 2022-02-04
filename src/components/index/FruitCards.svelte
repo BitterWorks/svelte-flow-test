@@ -1,25 +1,29 @@
 <script lang="ts">
-    import { mutation, ReadableQuery } from 'svelte-apollo';
-    import { DELETE_FRUIT, UPDATE_FRUIT } from '../../graphql/queries/Index';
-    import type { Fruit, FruitsQuery } from "../../types/Index";
+    import { mutation } from 'svelte-apollo';
 
+    import { DELETE_FRUIT, UPDATE_FRUIT } from '../../graphql/Queries';
+    import type { Fruit } from "../../types/Index";
     import EditFruitCard from "./EditFruitCard.svelte";
     import FruitCard from "./FruitCard.svelte";
+    import { indexStore } from '../../stores/Index';
 
-    export let fruits: Fruit[];
-    export let getFruitsQuery: ReadableQuery<FruitsQuery<Fruit[]>>;
-
+    
     let editing: number[] = [];
     let updateFruitQuery = mutation(UPDATE_FRUIT);
     let deleteFruitMutation = mutation(DELETE_FRUIT);
+    const { refetchQuery, fruitListQuery } = indexStore;
+    
+    $: console.log($fruitListQuery.result)
+    let fruits: Fruit[] = []
 
     async function deleteFruit(e: CustomEvent){
         const id = e.detail;
         try {
-            await deleteFruitMutation({variables: {
+            const response = await deleteFruitMutation({variables: {
                 id: id
             }});
-            getFruitsQuery.refetch();
+            refetchQuery();
+            console.log(response)
             // TODO: toast
         } catch {
             //TODO: toast
@@ -34,7 +38,7 @@
                 amount: fruit.amount,
                 id: fruit.id
             }});
-            getFruitsQuery.refetch();
+            refetchQuery();
             undoEdit(e);
             // TODO: toast
         } catch {
@@ -50,22 +54,21 @@
         editing = [fruitId, ...editing];
     };
 </script>
-<div>
-    {#each fruits as fruit (fruit.id)}
-        {#if editing.includes(fruit.id)}
-            <EditFruitCard
-            {fruit}
-            on:saveEdit={saveEdit}
-            on:undoEdit={undoEdit}
-            />
-        {:else}
-            <FruitCard
-                {fruit}
-                on:deleteFruit={deleteFruit}
-                on:editMode={editMode}
-            />
-        {/if}
+
+{#each fruits as fruit (fruit.id)}
+    {#if editing.includes(fruit.id)}
+        <EditFruitCard
+        {fruit}
+        on:saveEdit={saveEdit}
+        on:undoEdit={undoEdit}
+        />
     {:else}
-        <p>Todavía no hay frutas</p>
-    {/each}
-</div>
+        <FruitCard
+            {fruit}
+            on:deleteFruit={deleteFruit}
+            on:editMode={editMode}
+        />
+    {/if}
+{:else}
+    <p>Todavía no hay frutas</p>
+{/each}

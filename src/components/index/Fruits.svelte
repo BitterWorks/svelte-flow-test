@@ -1,22 +1,17 @@
 <script lang="ts">
-    import type { ReadableQuery } from 'svelte-apollo';
-    import type { Fruit, FruitsQuery } from "../../types/Index";
-
-
     import FruitCards from '../../components/index/FruitCards.svelte';
-    import { toFruitArray } from '../../utils/Index';
+    import { indexStore } from '../../stores/Index';
 
-    export let getFruitsQuery: ReadableQuery<FruitsQuery<Fruit[]>>;
-
-    
+    const { getFruitListQuery } = indexStore;
+    const fruitListQuery = getFruitListQuery();
 </script>
-{#await $getFruitsQuery}
-    Loading...
-{:then result}
-    {#if result.data}
-        <FruitCards
-        fruits={toFruitArray(result.data.fruits)}
-        {getFruitsQuery}
-        />
+
+<div>
+    {#if $fruitListQuery.loading}
+        Loading...
+    {:else if $fruitListQuery.error}
+        Errors: {$fruitListQuery.error}
+    {:else if $fruitListQuery.data}
+        <FruitCards />
     {/if}
-{/await}
+</div>
