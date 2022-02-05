@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { mutation, ReadableQuery } from 'svelte-apollo';
+    import { mutation } from 'svelte-apollo';
     import { DELETE_FRUIT, UPDATE_FRUIT } from '../../../../graphql/queries/Index';
     import type { Fruit, GetFruitsQuery } from "../../../../types/Index";
 

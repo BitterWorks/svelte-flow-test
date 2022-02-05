@@ -3,9 +3,9 @@
 
     import { ADD_FRUIT } from "../../graphql/queries/Index";    
     import type { ReadableQuery } from 'svelte-apollo';
-    import type { Fruit, FruitsQuery } from "../../types/Index";
+    import type { Fruit, GetFruitsQuery } from "../../types/Index";
 
-    export let getFruitsQuery: ReadableQuery<FruitsQuery<Fruit[]>>;
+    export let getFruitsQuery: GetFruitsQuery;
     let createFruitQuery = mutation(ADD_FRUIT);
     
     let name: string;

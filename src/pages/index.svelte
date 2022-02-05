@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { query, ReadableQuery } from 'svelte-apollo';
+    import { query } from 'svelte-apollo';
 
     import Form from "../components/index/Form.svelte";
     import type { GetFruitsQuery } from "../types/Index";
