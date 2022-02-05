@@ -1,7 +1,7 @@
 <script lang="ts">
     import { mutation } from "svelte-apollo";
 
-    import { ADD_FRUIT } from "../../graphql/queries/Index";
+    import { ADD_FRUIT } from "../../graphql/operations/Index";
     import type { GetFruitsQuery } from "../../types/Index";
 
     export let getFruitsQuery: GetFruitsQuery;

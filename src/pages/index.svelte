@@ -3,7 +3,7 @@
 
     import Form from "../components/index/Form.svelte";
     import type { GetFruitsQuery } from "../types/Index";
-    import { GET_FRUITS } from '../graphql/queries/Index';
+    import { GET_FRUITS } from '../graphql/operations/Index';
     import Fruits from '../components/index/Fruits/Index.svelte';
 
 

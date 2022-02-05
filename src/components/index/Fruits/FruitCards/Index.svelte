@@ -1,6 +1,6 @@
 <script lang="ts">
     import { mutation } from 'svelte-apollo';
-    import { DELETE_FRUIT, UPDATE_FRUIT } from '../../../../graphql/queries/Index';
+    import { DELETE_FRUIT, UPDATE_FRUIT } from '../../../../graphql/operations/Index';
     import type { Fruit, GetFruitsQuery } from "../../../../types/Index";
 
     import EditFruitCard from "./EditFruitCard.svelte";
