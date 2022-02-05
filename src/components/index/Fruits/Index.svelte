@@ -1,11 +1,11 @@
 <script lang="ts">
     import type { ReadableQuery } from 'svelte-apollo';
     
-    import type { Fruit, FruitsQuery } from "../../../types/Index";
+    import type { GetFruitsQuery } from "../../../types/Index";
     import FruitCards from '../Fruits/FruitCards/Index.svelte';
     import { toFruitArray } from '../../../utils/Index';
 
-    export let getFruitsQuery: ReadableQuery<FruitsQuery<Fruit[]>>;
+    export let getFruitsQuery: GetFruitsQuery;
 
     
 </script>

@@ -2,12 +2,12 @@
     import { query, ReadableQuery } from 'svelte-apollo';
 
     import Form from "../components/index/Form.svelte";
-    import type { Fruit, FruitsQuery } from "../types/Index";
+    import type { GetFruitsQuery } from "../types/Index";
     import { GET_FRUITS } from '../graphql/queries/Index';
     import Fruits from '../components/index/Fruits/Index.svelte';
 
 
-    let getFruitsQuery: ReadableQuery<FruitsQuery<Fruit[]>> = query(GET_FRUITS);  
+    let getFruitsQuery: GetFruitsQuery = query(GET_FRUITS);  
 
 </script>
 <main class="container">
