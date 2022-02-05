@@ -1,7 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
-    import type { Fruit } from "../../types/Index";
-    import Button from "./Button.svelte";
+    import type { Fruit } from "../../../../types/Index";
+    import Button from "../../shared/Button.svelte";
 
     export let fruit: Fruit;
 

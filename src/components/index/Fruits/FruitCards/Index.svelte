@@ -1,7 +1,7 @@
 <script lang="ts">
     import { mutation, ReadableQuery } from 'svelte-apollo';
-    import { DELETE_FRUIT, UPDATE_FRUIT } from '../../graphql/queries/Index';
-    import type { Fruit, FruitsQuery } from "../../types/Index";
+    import { DELETE_FRUIT, UPDATE_FRUIT } from '../../../../graphql/queries/Index';
+    import type { Fruit, FruitsQuery } from "../../../../types/Index";
 
     import EditFruitCard from "./EditFruitCard.svelte";
     import FruitCard from "./FruitCard.svelte";

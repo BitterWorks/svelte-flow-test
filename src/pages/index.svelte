@@ -4,7 +4,7 @@
     import Form from "../components/index/Form.svelte";
     import type { Fruit, FruitsQuery } from "../types/Index";
     import { GET_FRUITS } from '../graphql/queries/Index';
-    import Fruits from '../components/index/Fruits.svelte';
+    import Fruits from '../components/index/Fruits/Index.svelte';
 
 
     let getFruitsQuery: ReadableQuery<FruitsQuery<Fruit[]>> = query(GET_FRUITS);  
