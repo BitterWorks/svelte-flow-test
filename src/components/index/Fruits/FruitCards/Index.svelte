@@ -1,45 +1,40 @@
 <script lang="ts">
-    import { mutation } from 'svelte-apollo';
-    import { DELETE_FRUIT, UPDATE_FRUIT } from '../../../../graphql/operations/Index';
-    import type { Fruit, GetFruitsQuery } from "../../../../types/Index";
+    import type { Fruit } from "../../../../types/Index";
 
     import EditFruitCard from "./EditFruitCard.svelte";
     import FruitCard from "./FruitCard.svelte";
 
     export let fruits: Fruit[];
-    export let getFruitsQuery: GetFruitsQuery;
 
     let editing: number[] = [];
-    let updateFruitQuery = mutation(UPDATE_FRUIT);
-    let deleteFruitMutation = mutation(DELETE_FRUIT);
 
     async function deleteFruit(e: CustomEvent){
-        const id = e.detail;
-        try {
-            await deleteFruitMutation({variables: {
-                id: id
-            }});
-            getFruitsQuery.refetch();
-            // TODO: toast
-        } catch {
-            //TODO: toast
-        };
+        // const id = e.detail;
+        // try {
+        //     await deleteFruitMutation({variables: {
+        //         id: id
+        //     }});
+        //     getFruitsQuery.refetch();
+        //     // TODO: toast
+        // } catch {
+        //     //TODO: toast
+        // };
     };
     async function saveEdit(e: CustomEvent){
-        const fruit = e.detail;
-        try {
-            await updateFruitQuery({variables: {
-                fruitName: fruit.name,
-                color: fruit.color,
-                amount: fruit.amount,
-                id: fruit.id
-            }});
-            getFruitsQuery.refetch();
-            undoEdit(e);
-            // TODO: toast
-        } catch {
-            //TODO: toast
-        };
+        // const fruit = e.detail;
+        // try {
+        //     await updateFruitQuery({variables: {
+        //         fruitName: fruit.name,
+        //         color: fruit.color,
+        //         amount: fruit.amount,
+        //         id: fruit.id
+        //     }});
+        //     getFruitsQuery.refetch();
+        //     undoEdit(e);
+        //     // TODO: toast
+        // } catch {
+        //     //TODO: toast
+        // };
     };
     function undoEdit(e: CustomEvent): void{
         const fruitId = e.detail.id;

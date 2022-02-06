@@ -1,31 +1,23 @@
 <script lang="ts">
-    import { mutation } from "svelte-apollo";
-
-    import { ADD_FRUIT } from "../../graphql/operations/Index";
-    import type { GetFruitsQuery } from "../../types/Index";
-
-    export let getFruitsQuery: GetFruitsQuery;
-    let createFruitQuery = mutation(ADD_FRUIT);
-    
     let name: string;
     let color: string;
     let amount: number | undefined;
+    
     async function addFruit(){
-        try {
-            await createFruitQuery({variables: {
-                fruitName: name,
-                color: color,
-                amount: amount
-            }});
-            getFruitsQuery.refetch();
-            name = "";
-            color = "";
-            amount = undefined;
-        } catch {
-            //TODO: toast
-        };
+        // try {
+        //     await createFruitQuery({variables: {
+        //         fruitName: name,
+        //         color: color,
+        //         amount: amount
+        //     }});
+        //     getFruitsQuery.refetch();
+        //     name = "";
+        //     color = "";
+        //     amount = undefined;
+        // } catch {
+        //     //TODO: toast
+        // };
     };
-
 </script>
 
 <article>

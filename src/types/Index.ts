@@ -1,5 +1,3 @@
-import type { ReadableQuery } from "svelte-apollo";
-
 export interface Fruit {
     name:   string,
     color?: string,
@@ -9,4 +7,4 @@ export interface Fruit {
 interface FruitsQuery<T> {
     fruits: T
 };
-export type GetFruitsQuery = ReadableQuery<FruitsQuery<Fruit[]>>;
+// export type GetFruitsQuery = ReadableQuery<FruitsQuery<Fruit[]>>;
