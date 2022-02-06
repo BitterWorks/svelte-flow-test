@@ -1,0 +1,10 @@
+query {
+    fruits{
+        name
+        amount
+        id
+        color{
+            name
+        }
+    }
+}

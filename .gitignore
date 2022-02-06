@@ -5,3 +5,4 @@
 .DS_Store
 .routify/
 package-lock.json
+.env
