@@ -1,17 +1,26 @@
 <script lang="ts">    
     import FruitCards from '../Fruits/FruitCards/Index.svelte';
     import { toFruitArray } from '../../../utils/Index';
+
+    import { operationStore, query, setClient } from '@urql/svelte';
+    import { FruitsDocument, Query } from '../../../graphql/generated/graphql';
+
+    import client from "../../../graphql/_client";
+    setClient(client);
+
+    const fruits = operationStore<Query>(FruitsDocument)
+    query(fruits)
     
 </script>
 
 <section id="fruits">
-    <!-- {#if $getFruitsQuery.loading}
+    {#if $fruits.fetching}
         Loading...
-    {:else if $getFruitsQuery.error}
-        Errors
-    {:else if $getFruitsQuery.data}
+    {:else if $fruits.error}
+        {$fruits.error.message}
+    {:else}
          <FruitCards
-        fruits={toFruitArray($getFruitsQuery.data.fruits)}
+        fruits={toFruitArray($fruits?.data?.fruits ?? [])}
         />
-    {/if} -->
+    {/if} 
 </section>

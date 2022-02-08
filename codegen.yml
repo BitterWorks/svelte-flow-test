@@ -1,0 +1,12 @@
+overwrite: true
+schema: "${VITE_API_BASE_URL}graphql/"
+documents: "src/**/**/*.graphql"
+config:
+  withHooks: false
+generates:
+  src/graphql/generated/graphql.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-urql"
+      - "urql-svelte-operations-store"
