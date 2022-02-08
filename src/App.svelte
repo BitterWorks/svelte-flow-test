@@ -1,6 +1,10 @@
-<script>
+<script lang="ts">
   import { Router } from '@roxi/routify';
   import { routes } from '../.routify/routes';
+
+  import client from "../src/graphql/_client";
+  import { setClient } from '@urql/svelte';
+  setClient(client);
 </script>
 
 <svelte:head>

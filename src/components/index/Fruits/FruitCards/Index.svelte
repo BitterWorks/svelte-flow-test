@@ -20,6 +20,14 @@
         //     //TODO: toast
         // };
     };
+    function undoEdit(e: CustomEvent): void{
+        const fruitId = e.detail.id;
+        editing = editing.filter(id => id != fruitId);
+    };
+    function editMode(e:CustomEvent): void{
+        const fruitId = e.detail;
+        editing = [fruitId, ...editing];
+    };
     async function saveEdit(e: CustomEvent){
         // const fruit = e.detail;
         // try {
@@ -35,14 +43,6 @@
         // } catch {
         //     //TODO: toast
         // };
-    };
-    function undoEdit(e: CustomEvent): void{
-        const fruitId = e.detail.id;
-        editing = editing.filter(id => id != fruitId);
-    };
-    function editMode(e:CustomEvent): void{
-        const fruitId = e.detail;
-        editing = [fruitId, ...editing];
     };
 </script>
 <div>
