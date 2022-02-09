@@ -2,24 +2,22 @@
     import FruitCards from '../Fruits/FruitCards/Index.svelte';
     import { toFruitArray } from '../../../utils/Index';
 
-    import { operationStore, query } from '@urql/svelte';
-    import { FruitsDocument, Query } from '../../../graphql/generated/graphql';
+    import { query } from '@urql/svelte';
+    import { indexStore } from '../../../stores/Index';
 
-    
-
-    const fruits = operationStore<Query>(FruitsDocument)
-    query(fruits)
+    const { fruitList } = indexStore;
+    query(fruitList)
     
 </script>
 
 <section id="fruits">
-    {#if $fruits.fetching}
+    {#if $fruitList.fetching}
         Loading...
-    {:else if $fruits.error}
-        {$fruits.error.message}
+    {:else if $fruitList.error}
+        {$fruitList.error.message}
     {:else}
          <FruitCards
-        fruits={toFruitArray($fruits?.data?.fruits ?? [])}
+        fruits={toFruitArray($fruitList?.data?.fruits ?? [])}
         />
     {/if} 
 </section>
