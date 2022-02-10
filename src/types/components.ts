@@ -1,0 +1,1 @@
+export type TestParameter<inputType, outputType> = [input: inputType, expectedOutput: outputType];

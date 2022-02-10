@@ -10,7 +10,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
-    "types": ["vite/client", "svelte"],
+    "types": ["vite/client", "svelte", "vitest/globals"],
     "useUnknownInCatchVariables": false
   },
   "include": [

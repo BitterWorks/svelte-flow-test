@@ -6,3 +6,10 @@
 .routify/
 package-lock.json
 .env
+
+.DS_Store
+node_modules
+.nyc_output
+coverage
+tmp
+.idea
