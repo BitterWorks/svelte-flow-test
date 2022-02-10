@@ -5,5 +5,14 @@
         ".ts",
         ".svelte"
     ],
-    "src": "src"    
+    "src": "src",
+    "exclude": [
+        "src/graphql/**",
+        "src/stores/**",
+        "src/types/**",
+        "src/tests/**",
+        "env.d.ts",
+        "main.ts",
+        "vite-env.d.ts"
+    ]
 }
