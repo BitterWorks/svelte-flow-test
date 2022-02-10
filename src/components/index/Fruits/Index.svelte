@@ -1,8 +1,7 @@
 <script lang="ts">    
-    import FruitCards from '../Fruits/FruitCards/Index.svelte';
-    import { toFruitArray } from '../../../utils/Index';
-
     import { query } from '@urql/svelte';
+    
+    import FruitCards from '../Fruits/FruitCards/Index.svelte';
     import { indexStore } from '../../../stores/Index';
 
     const { fruitList } = indexStore;
@@ -17,7 +16,7 @@
         {$fruitList.error.message}
     {:else}
          <FruitCards
-        fruits={toFruitArray($fruitList?.data?.fruits ?? [])}
+        fruits={$fruitList?.data?.fruits ?? []}
         />
     {/if} 
 </section>

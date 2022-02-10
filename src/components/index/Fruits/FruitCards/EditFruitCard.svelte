@@ -3,9 +3,9 @@
     import type { Fruit, FruitInput } from "../../../../graphql/generated/graphql";
     import Button from "../../shared/Button.svelte";
 
-    export let fruit: FruitInput;
+    export let fruit: Fruit | FruitInput;
     let name: string = fruit.name;
-    let color: string = fruit.color ? fruit.color : "";
+    let color: string = (fruit as Fruit).color.name ? (fruit as Fruit).color.name : "";
     let amount: number = fruit.amount;
     const id: number | any = fruit.id
     const initialName: string = name;
