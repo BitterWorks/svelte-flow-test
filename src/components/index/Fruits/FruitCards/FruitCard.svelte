@@ -1,6 +1,6 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
-    import type { Fruit } from "../../../../types/Index";
+    import type { Fruit } from "../../../../graphql/generated/graphql";
     import Button from "../../shared/Button.svelte";
 
     export let fruit: Fruit;

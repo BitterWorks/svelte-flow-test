@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Fruit } from "../../../../types/Index";
+    import type { Fruit } from "../../../../graphql/generated/graphql";
 
     import EditFruitCard from "./EditFruitCard.svelte";
     import FruitCard from "./FruitCard.svelte";

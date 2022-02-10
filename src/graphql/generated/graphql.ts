@@ -28,7 +28,7 @@ export type DeleteFruitInput = {
 export type Fruit = {
   __typename?: 'Fruit';
   amount: Scalars['Int'];
-  color: Color|string;
+  color: Color;
   id: Scalars['ID'];
   name: Scalars['String'];
 };

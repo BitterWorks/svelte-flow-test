@@ -1,9 +1,9 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
-    import type { Fruit } from "../../../../types/Index";
+    import type { Fruit, FruitInput } from "../../../../graphql/generated/graphql";
     import Button from "../../shared/Button.svelte";
 
-    export let fruit: Fruit;
+    export let fruit: FruitInput;
     let name: string = fruit.name;
     let color: string = fruit.color ? fruit.color : "";
     let amount: number = fruit.amount;
