@@ -1,0 +1,9 @@
+{
+    "include": "src",
+    "all": true,
+    "extension": [
+        ".ts",
+        ".svelte"
+    ],
+    "src": "src"    
+}

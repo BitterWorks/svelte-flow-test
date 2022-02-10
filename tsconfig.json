@@ -10,7 +10,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
-    "types": ["vite/client", "svelte", "vitest/globals"],
+    "types": ["vite/client", "svelte", "vitest/globals", "node"],
     "useUnknownInCatchVariables": false
   },
   "include": [
@@ -19,5 +19,5 @@
     "src/**/*.tsx",
     "src/**/*.svelte",
     "src/main.js"
-  ]
+, "src/tests/register.js"  ]
 }
