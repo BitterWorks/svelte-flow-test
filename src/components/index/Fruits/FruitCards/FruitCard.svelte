@@ -10,7 +10,7 @@
 
 <article>
     <h5>{fruit.name}</h5>
-    <p>Color: {fruit.color}</p>
+    <p>Color: {fruit.color.name}</p>
     <p class:warning={fruit.amount < 4}>Cant.: {fruit.amount}</p>
     <p>Id: {fruit.id}</p>
     <div class="buttons">
