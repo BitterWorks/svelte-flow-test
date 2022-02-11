@@ -90,7 +90,7 @@ export type Unnamed_2_MutationVariables = Exact<{
 
 export type Unnamed_2_Mutation = { __typename?: 'Mutation', deleteFruit: { __typename?: 'Fruit', name: string, amount: number, id: string, color: { __typename?: 'Color', name: string } } };
 
-export type Unnamed_3_MutationVariables = Exact<{
+export type UpdateFruitMutationVariables = Exact<{
   fruitName?: InputMaybe<Scalars['String']>;
   color?: InputMaybe<Scalars['String']>;
   amount?: InputMaybe<Scalars['Int']>;
@@ -98,7 +98,7 @@ export type Unnamed_3_MutationVariables = Exact<{
 }>;
 
 
-export type Unnamed_3_Mutation = { __typename?: 'Mutation', updateFruit: { __typename?: 'Fruit', name: string, amount: number, id: string, color: { __typename?: 'Color', name: string } } };
+export type UpdateFruitMutation = { __typename?: 'Mutation', updateFruit: { __typename?: 'Fruit', name: string, amount: number, id: string, color: { __typename?: 'Color', name: string } } };
 
 export const FruitsDocument = gql`
   query {

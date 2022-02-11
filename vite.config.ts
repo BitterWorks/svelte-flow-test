@@ -6,6 +6,8 @@ export default defineConfig({
     server: {
         port: 3000,
     },
-    
     plugins: [svelte()],
+    optimizeDeps: {
+        exclude: ['@urql/svelte']
+    }
 });

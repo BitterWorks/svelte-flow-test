@@ -1,22 +1,20 @@
 <script lang="ts">    
     import { query } from '@urql/svelte';
-    
     import FruitCards from '../Fruits/FruitCards/Index.svelte';
-    import { indexStore } from '../../../stores/Index';
+    import { indexStores } from '../../../stores/IndexStores';
 
-    const { fruitList } = indexStore;
-    query(fruitList)
-    
+    const { fruitListStore } = indexStores;
+    query(fruitListStore)
 </script>
 
 <section id="fruits">
-    {#if $fruitList.fetching}
+    {#if $fruitListStore.fetching}
         Loading...
-    {:else if $fruitList.error}
-        {$fruitList.error.message}
+    {:else if $fruitListStore.error}
+        {$fruitListStore.error.message}
     {:else}
          <FruitCards
-        fruits={$fruitList?.data?.fruits ?? []}
+        fruits={$fruitListStore?.data?.fruits ?? []}
         />
     {/if} 
 </section>

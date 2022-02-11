@@ -1,23 +1,29 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
-    import type { Fruit, FruitInput } from "../../../../graphql/generated/graphql";
+    import type { Fruit, FruitInput, UpdateFruitMutationVariables } from "../../../../graphql/generated/graphql";
     import Button from "../../shared/Button.svelte";
 
-    export let fruit: Fruit | FruitInput;
-    let name: string = fruit.name;
-    let color: string = (fruit as Fruit).color.name ? (fruit as Fruit).color.name : "";
-    let amount: number = fruit.amount;
-    const id: number | any = fruit.id
-    const initialName: string = name;
+    export let fruit: Fruit | FruitInput | Omit<UpdateFruitMutationVariables, "id">;
+    const oldFruit: Omit<UpdateFruitMutationVariables, "id"> = {
+        fruitName: (fruit as Fruit).name,
+        color: (fruit as Fruit).color.name,
+        amount: (fruit as Fruit).amount
+    };
+    const id: number | any = (fruit as Fruit).id
+    const initialName: string = (fruit as Fruit).name;
+    let name: string = (fruit as Fruit).name;
+    let color: string = (fruit as Fruit).color.name;
+    let amount: number = (fruit as Fruit).amount;
 
     let dispatch = createEventDispatcher();
 
     $: fruit = {
-        name: name,
+        fruitName: name,
         color: color,
         amount: amount,
         id: id
-    }
+    };
+    $: fruits = [oldFruit, fruit]
 
 </script>
 
@@ -29,10 +35,10 @@
     <p>Id: {fruit.id}</p>
     <Button
     iconName={"back"}
-    on:click|once={() => dispatch("undoEdit", fruit)}
+    on:click|once={() => dispatch("undoEdit", fruit.id)}
     />
     <Button
     iconName={"tick"}
-    on:click|once={() => dispatch("saveEdit", fruit)}
+    on:click|once={() => dispatch("saveEdit", fruits)}
     />
 </article>

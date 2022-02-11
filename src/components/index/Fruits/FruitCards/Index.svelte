@@ -1,48 +1,38 @@
 <script lang="ts">
-    import type { Fruit } from "../../../../graphql/generated/graphql";
-
+    import { mutation } from "@urql/svelte";
+    import type { Fruit,FruitInput,Scalars,UpdateFruitMutationVariables } from "../../../../graphql/generated/graphql";
+    import { indexStores } from "../../../../stores/IndexStores";
+    import { filterObj } from "../../../../utils/Index";
     import EditFruitCard from "./EditFruitCard.svelte";
     import FruitCard from "./FruitCard.svelte";
-
+    const { fruitListStore, updateFruitStore } = indexStores;
     export let fruits: Fruit[];
 
-    let editing: number[] = [];
+    const updateFruitMutation = mutation(updateFruitStore);
+    function updateFruit(newFruit: UpdateFruitMutationVariables){
+        updateFruitMutation(newFruit);
+    }; 
 
-    async function deleteFruit(e: CustomEvent){
-        // const id = e.detail;
-        // try {
-        //     await deleteFruitMutation({variables: {
-        //         id: id
-        //     }});
-        //     getFruitsQuery.refetch();
-        //     // TODO: toast
-        // } catch {
-        //     //TODO: toast
-        // };
+
+    let editing: Scalars["ID"][] = [];  
+    function deleteFruit(e: CustomEvent){
     };
-    function undoEdit(e: CustomEvent): void{
-        const fruitId = e.detail.id;
+    function undoEdit(fruitId: Scalars["ID"]): void{
         editing = editing.filter(id => id != fruitId);
     };
     function editMode(e:CustomEvent): void{
         const fruitId = e.detail;
         editing = [fruitId, ...editing];
     };
-    async function saveEdit(e: CustomEvent){
-        // const fruit = e.detail;
-        // try {
-        //     await updateFruitQuery({variables: {
-        //         fruitName: fruit.name,
-        //         color: fruit.color,
-        //         amount: fruit.amount,
-        //         id: fruit.id
-        //     }});
-        //     getFruitsQuery.refetch();
-        //     undoEdit(e);
-        //     // TODO: toast
-        // } catch {
-        //     //TODO: toast
-        // };
+    function saveEdit(e: CustomEvent){
+        const id: Scalars["ID"] = e.detail[1].id
+        delete e.detail[1].id
+        const diffObj: FruitInput = filterObj(e.detail[0], e.detail[1]);
+        if (Object.keys(diffObj).length > 0){
+            updateFruit({...diffObj, id})
+        };
+        undoEdit(id);
+        fruitListStore.reexecute();
     };
 </script>
 <div>
@@ -51,7 +41,7 @@
             <EditFruitCard
             {fruit}
             on:saveEdit={saveEdit}
-            on:undoEdit={undoEdit}
+            on:undoEdit={() => undoEdit(fruit.id)}
             />
         {:else}
             <FruitCard
