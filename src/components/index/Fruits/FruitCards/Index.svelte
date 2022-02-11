@@ -8,22 +8,25 @@
     const { fruitListStore, updateFruitStore } = indexStores;
     export let fruits: Fruit[];
 
-    const updateFruitMutation = mutation(updateFruitStore);
-    function updateFruit(newFruit: UpdateFruitMutationVariables){
-        updateFruitMutation(newFruit);
-    }; 
+    let editing: Scalars["ID"][] = JSON.parse(localStorage.getItem("editing") as string) || [];
+    $: console.log(editing)
+    $: editing && localStorage.setItem("editing", JSON.stringify(editing));
 
-
-    let editing: Scalars["ID"][] = [];  
     function deleteFruit(e: CustomEvent){
     };
     function undoEdit(fruitId: Scalars["ID"]): void{
+        console.log(editing)
         editing = editing.filter(id => id != fruitId);
     };
     function editMode(e:CustomEvent): void{
         const fruitId = e.detail;
         editing = [fruitId, ...editing];
     };
+
+    const updateFruitMutation = mutation(updateFruitStore);
+    function updateFruit(newFruit: UpdateFruitMutationVariables){
+        updateFruitMutation(newFruit);
+    }; 
     function saveEdit(e: CustomEvent){
         const id: Scalars["ID"] = e.detail[1].id
         delete e.detail[1].id
