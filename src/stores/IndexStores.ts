@@ -1,12 +1,13 @@
 import { operationStore } from "@urql/svelte";
-import { DeleteFruitDocument, FruitsDocument, UpdateFruitDocument } from "../graphql/generated/graphql";
+import { CreateFruitDocument, DeleteFruitDocument, FruitsDocument, UpdateFruitDocument } from "../graphql/generated/graphql";
 import type { Query, Mutation } from "../graphql/generated/graphql";
 
 class IndexStores {
     constructor (
         public fruitListStore = operationStore<Query>(FruitsDocument),
         public updateFruitStore = operationStore<Mutation>(UpdateFruitDocument),
-        public deleteFruitStore = operationStore<Mutation>(DeleteFruitDocument)
+        public deleteFruitStore = operationStore<Mutation>(DeleteFruitDocument),
+        public createFruitStore = operationStore<Mutation>(CreateFruitDocument)
     ){};
 };
 

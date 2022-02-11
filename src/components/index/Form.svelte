@@ -1,29 +1,32 @@
 <script lang="ts">
-    let name: string;
+import { mutation } from "@urql/svelte";
+import type { MutationCreateFruitArgs } from "../../graphql/generated/graphql";
+import { indexStores } from "../../stores/IndexStores";
+
+    const { createFruitStore } = indexStores;
+
+    let fruitName: string;
     let color: string;
     let amount: number | undefined;
     
-    async function addFruit(){
-        // try {
-        //     await createFruitQuery({variables: {
-        //         fruitName: name,
-        //         color: color,
-        //         amount: amount
-        //     }});
-        //     getFruitsQuery.refetch();
-        //     name = "";
-        //     color = "";
-        //     amount = undefined;
-        // } catch {
-        //     //TODO: toast
-        // };
+    const createFruitMutation = mutation(createFruitStore);
+    function createFruit(){
+        const newFruit = {
+            fruitName,
+            color,
+            amount
+        }
+        createFruitMutation(newFruit);
+        fruitName = "";
+        color = "";
+        amount = undefined;
     };
 </script>
 
 <article>
     <h2>Añadí tu Fruta</h2>
-    <form on:submit|preventDefault={addFruit}>
-        <input type="text" placeholder="name" bind:value={name}>
+    <form on:submit|preventDefault={createFruit}>
+        <input type="text" placeholder="name" bind:value={fruitName}>
         <input type="text" placeholder="color" bind:value={color}>
         <input type="number" placeholder="amount" bind:value={amount}>
         <button>Añadir</button>
