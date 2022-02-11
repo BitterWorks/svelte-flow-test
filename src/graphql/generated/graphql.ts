@@ -83,7 +83,7 @@ export type Unnamed_1_MutationVariables = Exact<{
 
 export type Unnamed_1_Mutation = { __typename?: 'Mutation', createFruit: { __typename?: 'Fruit', name: string, amount: number, color: { __typename?: 'Color', name: string } } };
 
-export type Unnamed_2_MutationVariables = Exact<{
+export type DeleteFruitMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 

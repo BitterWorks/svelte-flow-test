@@ -1,19 +1,17 @@
 <script lang="ts">
     import { mutation } from "@urql/svelte";
-    import type { Fruit,FruitInput,Scalars,UpdateFruitMutationVariables } from "../../../../graphql/generated/graphql";
+    import type { DeleteFruitMutationVariables, Fruit,FruitInput,Scalars,UpdateFruitMutationVariables } from "../../../../graphql/generated/graphql";
     import { indexStores } from "../../../../stores/IndexStores";
     import { filterObj } from "../../../../utils/Index";
     import EditFruitCard from "./EditFruitCard.svelte";
     import FruitCard from "./FruitCard.svelte";
-    const { fruitListStore, updateFruitStore } = indexStores;
+    const { fruitListStore, updateFruitStore, deleteFruitStore } = indexStores;
     export let fruits: Fruit[];
 
     let editing: Scalars["ID"][] = JSON.parse(localStorage.getItem("editing") as string) || [];
     $: console.log(editing)
     $: editing && localStorage.setItem("editing", JSON.stringify(editing));
 
-    function deleteFruit(e: CustomEvent){
-    };
     function undoEdit(fruitId: Scalars["ID"]): void{
         console.log(editing)
         editing = editing.filter(id => id != fruitId);
@@ -22,7 +20,6 @@
         const fruitId = e.detail;
         editing = [fruitId, ...editing];
     };
-
     const updateFruitMutation = mutation(updateFruitStore);
     function updateFruit(newFruit: UpdateFruitMutationVariables){
         updateFruitMutation(newFruit);
@@ -37,6 +34,14 @@
         undoEdit(id);
         fruitListStore.reexecute();
     };
+    const deleteFruitMutation = mutation(deleteFruitStore);
+    function delFruit(fruitToDelete: DeleteFruitMutationVariables){
+        deleteFruitMutation(fruitToDelete);
+    };
+    function deleteFruit(e: CustomEvent){
+        const id: Scalars["ID"] = e.detail;
+        delFruit({id});
+    };
 </script>
 <div>
     {#each fruits as fruit (fruit.id)}
@@ -48,9 +53,9 @@
             />
         {:else}
             <FruitCard
-                {fruit}
-                on:deleteFruit={deleteFruit}
-                on:editMode={editMode}
+            {fruit}
+            on:deleteFruit={deleteFruit}
+            on:editMode={editMode}
             />
         {/if}
     {:else}
