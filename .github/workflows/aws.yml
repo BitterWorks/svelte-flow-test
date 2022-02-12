@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: [ WF3-LS ]
-
+    
 
 jobs:
   
@@ -41,30 +41,22 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
 
-    - name: Deploy to VM
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_DEFAULT_REGION: us-east-2
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: svelte-deployment-2-static
-        IMAGE_TAG: github
-        CONTAINER_NAME: svelte-deployment-2-static
-        SSH_PRV_KEY: ${{ secrets.SSH_PRV_KEY }}
-        USER: ubuntu
-        DEPLOY_SERVER: ec2-3-16-138-243.us-east-2.compute.amazonaws.com
+    - name: Download task definition
       run: |
-        sudo apt-get update 
-        sudo apt-get install -y awscli
-        sudo mkdir ~/.ssh && cd ~/.ssh
-        sudo echo $SSH_PRV_KEY | base64 -d > ~/.ssh/id_rsa
-        sudo chmod 600 -R ~/.ssh
-        sudo echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-        sudo ssh -i "id_rsa" -T $USER@$DEPLOY_SERVER "
-           docker login -u AWS -p $(aws ecr get-login-password --region $AWS_DEFAULT_REGION) $AWS_REGISTRY_URL &&
-           docker container stop $CONTAINER_NAME || true &&
-           docker container rm $CONTAINER_NAME || true &&
-           docker pull $AWS_REGISTRY_URL:$TAG &&
-           docker run --restart=always --name $CONTAINER_NAME -dp 3000:3000 $AWS_REGISTRY_URL:$TAG &&
-           exit
-           "
+        aws ecs describe-task-definition --task-definition my-task-definition-family --query taskDefinition > task-definition.json
+    
+    - name: Fill in the new image ID in the Amazon ECS task definition
+      id: task-def
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: task-definition.json
+        container-name: svelteOk
+        image: ${{ steps.build-image.outputs.image }}
+
+    - name: Deploy Amazon ECS task definition
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        service: service-3000
+        cluster: SvelteOk
+        wait-for-service-stability: true
