@@ -51,6 +51,8 @@ jobs:
         IMAGE_TAG: github
         CONTAINER_NAME: svelte-deployment-2-static
         SSH_PRV_KEY: ${{ secrets.SSH_PRV_KEY }}
+        USER: ubuntu
+        DEPLOY_SERVER: ec2-3-16-138-243.us-east-2.compute.amazonaws.com
       run: |
         sudo apt-get update && apt-get install -y awscli
         sudo mkdir ~/.ssh && cd ~/.ssh
