@@ -40,7 +40,7 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
 
-    - name: Build, tag, and push image to Amazon ECR
+    - name: Deploy to VM
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -51,8 +51,6 @@ jobs:
         CONTAINER_NAME: svelte-deployment-2-static
         SSH_PRV_KEY: ${{ secrets.SSH_PRV_KEY }}
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile.dev .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         apt-get update && apt-get install -y awscli
         mkdir ~/.ssh && cd ~/.ssh
         echo $SSH_PRV_KEY | base64 -d > ~/.ssh/id_rsa
