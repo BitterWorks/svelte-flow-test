@@ -1,9 +1,11 @@
 <script lang="ts">
-import { mutation } from "@urql/svelte";
-import type { MutationCreateFruitArgs } from "../../graphql/generated/graphql";
-import { indexStores } from "../../stores/IndexStores";
+    import { toasts } from "svelte-toasts";
+    import { indexConstants } from "../../utils/Constants";    
+    import { mutation } from "@urql/svelte";
+    import { indexStores } from "../../stores/IndexStores";
 
     const { createFruitStore } = indexStores;
+    const { TOAST_DEFAULTS } = indexConstants;
 
     let fruitName: string;
     let color: string;
@@ -16,7 +18,21 @@ import { indexStores } from "../../stores/IndexStores";
             color,
             amount
         }
-        createFruitMutation(newFruit);
+        createFruitMutation(newFruit).then(result => {
+            if (!result.error){
+                toasts.success({
+                    title: "Fruta creada!",
+                    description: "Salió todo bien",
+                    ...TOAST_DEFAULTS
+                });
+            } else {
+                toasts.error({
+                    title: "No se pudo crear la fruta",
+                    description: "Salió todo mal",
+                    ...TOAST_DEFAULTS
+                });
+            };
+        });
         fruitName = "";
         color = "";
         amount = undefined;

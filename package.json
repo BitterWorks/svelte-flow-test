@@ -11,6 +11,7 @@
     "generate": "graphql-codegen --config codegen.yml -r .env"
   },
   "devDependencies": {
+    "@beyonk/svelte-notifications": "^4.1.1",
     "@graphql-codegen/cli": "^2.5.0",
     "@graphql-codegen/typescript": "^2.4.3",
     "@graphql-codegen/typescript-operations": "^2.2.4",
@@ -27,6 +28,7 @@
     "svelte": "^3.37.0",
     "svelte-check": "^1.6.0",
     "svelte-preprocess": "^4.7.2",
+    "svelte-toasts": "^1.1.2",
     "tsm": "^2.2.1",
     "uvu": "^0.5.2",
     "vite": "^2.2.3"

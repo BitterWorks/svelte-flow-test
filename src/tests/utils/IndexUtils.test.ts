@@ -1,7 +1,7 @@
 import { test } from 'uvu';
 import * as assert from 'uvu/assert';
 
-import { filterObj } from "../../utils/Index";
+import { filterObj } from "../../utils/Logic";
 import type { FruitInput } from "../../graphql/generated/graphql";
 import type { TestParameter } from "../../types/components";
 

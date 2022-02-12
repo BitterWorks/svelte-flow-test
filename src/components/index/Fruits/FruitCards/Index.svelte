@@ -1,8 +1,10 @@
 <script lang="ts">
     import { mutation } from "@urql/svelte";
-    import type { DeleteFruitMutationVariables, Fruit,FruitInput,Scalars,UpdateFruitMutationVariables } from "../../../../graphql/generated/graphql";
+    import { toasts } from "svelte-toasts";
+    import type { DeleteFruitMutationVariables,Fruit,FruitInput,Scalars,UpdateFruitMutationVariables } from "../../../../graphql/generated/graphql";
     import { indexStores } from "../../../../stores/IndexStores";
-    import { filterObj } from "../../../../utils/Index";
+    import { indexConstants } from "../../../../utils/Constants";
+    import { filterObj } from "../../../../utils/Logic";
     import EditFruitCard from "./EditFruitCard.svelte";
     import FruitCard from "./FruitCard.svelte";
     const { fruitListStore, updateFruitStore, deleteFruitStore } = indexStores;
@@ -32,7 +34,11 @@
             updateFruit({...diffObj, id})
         };
         undoEdit(id);
-        fruitListStore.reexecute();
+        toasts.success({
+            title: "Fruta guardada!",
+            description: "Salió todo bien",
+            ...indexConstants.TOAST_DEFAULTS
+        });
     };
     const deleteFruitMutation = mutation(deleteFruitStore);
     function delFruit(fruitToDelete: DeleteFruitMutationVariables){
@@ -41,6 +47,11 @@
     function deleteFruit(e: CustomEvent){
         const id: Scalars["ID"] = e.detail;
         delFruit({id});
+        toasts.warning({
+            title: "Fruta borrada!",
+            description: "Salió todo bien",
+            ...indexConstants.TOAST_DEFAULTS
+        });
     };
 </script>
 <div>

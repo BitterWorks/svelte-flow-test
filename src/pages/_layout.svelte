@@ -1,9 +1,13 @@
 <script>
     import {isActive, url, page, metatags} from '@roxi/routify';
-    
+    import { NotificationDisplay } from '@beyonk/svelte-notifications';	
+	let n;
+
     $: metatags.title = `Frutapp | ${$page.title}`;
+    
 </script>
 
+<NotificationDisplay bind:this={n} />
 <nav class="container-fluid">
     <ul>
     <li><strong>Frutapp</strong></li>
