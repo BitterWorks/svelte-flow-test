@@ -13,6 +13,7 @@ jobs:
     name: Build Image
     runs-on: ubuntu-latest
 
+
    
     steps:
 
@@ -51,7 +52,8 @@ jobs:
         CONTAINER_NAME: svelte-deployment-2-static
         SSH_PRV_KEY: ${{ secrets.SSH_PRV_KEY }}
       run: |
-        sudo apt-get update && apt-get install -y awscli
+        sudo su
+        apt-get update && apt-get install -y awscli
         mkdir ~/.ssh && cd ~/.ssh
         echo $SSH_PRV_KEY | base64 -d > ~/.ssh/id_rsa
         chmod 600 -R ~/.ssh
