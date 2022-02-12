@@ -38,3 +38,31 @@ jobs:
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile.dev .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+
+    - name: Build, tag, and push image to Amazon ECR
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: us-east-2
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: svelte-deployment-2-static
+        IMAGE_TAG: github
+        CONTAINER_NAME: svelte-deployment-2-static
+        SSH_PRV_KEY: ${{ secrets.SSH_PRV_KEY }}
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile.dev .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        apt-get update && apt-get install -y awscli
+        mkdir ~/.ssh && cd ~/.ssh
+        echo $SSH_PRV_KEY | base64 -d > ~/.ssh/id_rsa
+        chmod 600 -R ~/.ssh
+        echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+        ssh -i "id_rsa" -T $USER@$DEPLOY_SERVER "
+           docker login -u AWS -p $(aws ecr get-login-password --region $AWS_DEFAULT_REGION) $AWS_REGISTRY_URL &&
+           docker container stop $CONTAINER_NAME || true &&
+           docker container rm $CONTAINER_NAME || true &&
+           docker pull $AWS_REGISTRY_URL:$TAG &&
+           docker run --restart=always --name $CONTAINER_NAME -dp 3000:3000 $AWS_REGISTRY_URL:$TAG &&
+           exit
+           "
