@@ -62,9 +62,13 @@ export type MutationUpdateFruitArgs = {
   data: UpdateFruitInput;
 };
 
-export type Query = {
-  __typename?: 'Query';
+export type FruitsQuery = {
+  __typename?: 'FruitsQuery';
   fruits: Array<Fruit>;
+};
+export type FruitQuery = {
+  __typename?: 'FruitQuery';
+  fruit: Fruit;
 };
 
 export type UpdateFruitInput = {
@@ -111,6 +115,19 @@ export const FruitsDocument = gql`
         }
     }
   }
+`;
+
+export const FruitDocument = gql`
+query($id: ID){
+  fruit(data:{id: $id}) {
+    name
+    amount
+    id
+    color {
+      name
+    }
+  }
+}
 `;
 
 export const CreateFruitDocument = gql`

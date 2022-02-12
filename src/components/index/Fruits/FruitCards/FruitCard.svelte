@@ -2,6 +2,7 @@
     import { createEventDispatcher } from "svelte";
     import type { Fruit } from "../../../../graphql/generated/graphql";
     import Button from "../../shared/Button.svelte";
+    import { url } from "@roxi/routify";
 
     export let fruit: Fruit;
 
@@ -9,7 +10,7 @@
 </script>
 
 <article>
-    <h5>{fruit.name}</h5>
+    <a href={$url(`./${fruit.id}`)}><h5>{fruit.name}</h5></a>
     <p>Color: {fruit.color.name}</p>
     <p class:warning={fruit.amount < 4}>Cant.: {fruit.amount}</p>
     <p>Id: {fruit.id}</p>

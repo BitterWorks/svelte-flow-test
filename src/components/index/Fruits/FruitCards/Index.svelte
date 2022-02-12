@@ -7,7 +7,7 @@
     import { filterObj } from "../../../../utils/Logic";
     import EditFruitCard from "./EditFruitCard.svelte";
     import FruitCard from "./FruitCard.svelte";
-    const { fruitListStore, updateFruitStore, deleteFruitStore } = indexStores;
+    const { updateFruitStore, deleteFruitStore } = indexStores;
     export let fruits: Fruit[];
 
     let editing: Scalars["ID"][] = JSON.parse(localStorage.getItem("editing") as string) || [];
