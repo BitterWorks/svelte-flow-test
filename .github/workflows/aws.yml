@@ -54,7 +54,8 @@ jobs:
         USER: ubuntu
         DEPLOY_SERVER: ec2-3-16-138-243.us-east-2.compute.amazonaws.com
       run: |
-        sudo apt-get update && apt-get install -y awscli
+        sudo apt-get update 
+        sudo apt-get install -y awscli
         sudo mkdir ~/.ssh && cd ~/.ssh
         sudo echo $SSH_PRV_KEY | base64 -d > ~/.ssh/id_rsa
         sudo chmod 600 -R ~/.ssh
