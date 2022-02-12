@@ -52,13 +52,12 @@ jobs:
         CONTAINER_NAME: svelte-deployment-2-static
         SSH_PRV_KEY: ${{ secrets.SSH_PRV_KEY }}
       run: |
-        sudo su
-        apt-get update && apt-get install -y awscli
-        mkdir ~/.ssh && cd ~/.ssh
-        echo $SSH_PRV_KEY | base64 -d > ~/.ssh/id_rsa
-        chmod 600 -R ~/.ssh
-        echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-        ssh -i "id_rsa" -T $USER@$DEPLOY_SERVER "
+        sudo apt-get update && apt-get install -y awscli
+        sudo mkdir ~/.ssh && cd ~/.ssh
+        sudo echo $SSH_PRV_KEY | base64 -d > ~/.ssh/id_rsa
+        sudo chmod 600 -R ~/.ssh
+        sudo echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+        sudo ssh -i "id_rsa" -T $USER@$DEPLOY_SERVER "
            docker login -u AWS -p $(aws ecr get-login-password --region $AWS_DEFAULT_REGION) $AWS_REGISTRY_URL &&
            docker container stop $CONTAINER_NAME || true &&
            docker container rm $CONTAINER_NAME || true &&
