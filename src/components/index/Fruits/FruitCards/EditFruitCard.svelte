@@ -2,6 +2,8 @@
     import { createEventDispatcher } from "svelte";
     import type { Fruit, FruitInput, UpdateFruitMutationVariables } from "../../../../graphql/generated/graphql";
     import Button from "../../shared/Button.svelte";
+    
+    let dispatch = createEventDispatcher();
 
     export let fruit: Fruit | FruitInput | Omit<UpdateFruitMutationVariables, "id">;
     const oldFruit: Omit<UpdateFruitMutationVariables, "id"> = {
@@ -14,17 +16,14 @@
     let name: string = (fruit as Fruit).name;
     let color: string = (fruit as Fruit).color.name;
     let amount: number = (fruit as Fruit).amount;
-
-    let dispatch = createEventDispatcher();
-
     $: fruit = {
         fruitName: name,
         color: color,
         amount: amount,
         id: id
     };
-    $: fruits = [oldFruit, fruit]
     $: fruitNormalized = fruit as Fruit
+    $: fruits = [oldFruit, fruitNormalized]
 
 </script>
 
