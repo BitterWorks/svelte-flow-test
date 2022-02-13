@@ -24,6 +24,7 @@
         id: id
     };
     $: fruits = [oldFruit, fruit]
+    $: fruitNormalized = fruit as Fruit
 
 </script>
 
@@ -32,10 +33,10 @@
     <input type="text" placeholder="name" bind:value={name}>
     <input type="text" placeholder="color" bind:value={color}>
     <input type="number" placeholder="amount" bind:value={amount}>
-    <p>Id: {fruit.id}</p>
+    <p>Id: {fruitNormalized.id}</p>
     <Button
     iconName={"back"}
-    on:click|once={() => dispatch("undoEdit", fruit.id)}
+    on:click|once={() => dispatch("undoEdit", fruitNormalized.id)}
     />
     <Button
     iconName={"tick"}

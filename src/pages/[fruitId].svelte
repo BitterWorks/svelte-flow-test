@@ -1,9 +1,6 @@
 <script lang="ts">
     import { query } from "@urql/svelte";
-    import { onMount } from "svelte";
-    import { dataset_dev } from "svelte/internal";
-import FruitDetail from "../components/fruitDetail/FruitDetail.svelte";
-    import FruitCard from "../components/index/Fruits/FruitCards/FruitCard.svelte";
+    import FruitDetail from "../components/fruitDetail/FruitDetail.svelte";
 
     import type { Scalars } from "../graphql/generated/graphql";
     import { indexStores } from "../stores/IndexStores";
@@ -23,7 +20,6 @@ import FruitDetail from "../components/fruitDetail/FruitDetail.svelte";
         {:else if $retrieveFruitStore.error}
             {$retrieveFruitStore.error.message}
         {:else}
-                <!-- svelte-ignore a11y-object-possiblyundefined -->
                 <FruitDetail fruit={$retrieveFruitStore?.data?.fruit} />
         {/if} 
     </article>
