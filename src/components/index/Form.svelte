@@ -42,9 +42,9 @@
 <article>
     <h2>Añadí tu Fruta</h2>
     <form on:submit|preventDefault={createFruit}>
-        <input type="text" placeholder="name" bind:value={fruitName}>
-        <input type="text" placeholder="color" bind:value={color}>
-        <input type="number" placeholder="amount" bind:value={amount}>
-        <button>Añadir</button>
+        <input id="name" type="text" placeholder="name" bind:value={fruitName}>
+        <input id="color" type="text" placeholder="color" bind:value={color}>
+        <input id="amount" type="number" placeholder="amount" bind:value={amount}>
+        <button id="add">Añadir</button>
     </form>
 </article>

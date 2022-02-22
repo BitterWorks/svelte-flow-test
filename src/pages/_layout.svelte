@@ -10,7 +10,7 @@
 <NotificationDisplay bind:this={n} />
 <nav class="container-fluid">
     <ul>
-    <li><strong>Frutapp</strong></li>
+    <li><strong id="navTitle">Frutapp</strong></li>
     </ul>
     <ul>
     <li><a class:secondary={!$isActive('./index')} href={$url('./index')}>Home</a></li>

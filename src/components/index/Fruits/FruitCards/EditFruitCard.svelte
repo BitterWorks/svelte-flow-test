@@ -27,7 +27,7 @@
 
 </script>
 
-<article>
+<article class="fruitEdit">
     <h5>{initialName} (Editando)</h5>
     <input type="text" placeholder="name" bind:value={name}>
     <input type="text" placeholder="color" bind:value={color}>

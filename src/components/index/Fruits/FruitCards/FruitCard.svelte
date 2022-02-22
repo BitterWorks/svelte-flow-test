@@ -9,11 +9,19 @@
     let dispatch = createEventDispatcher();
 </script>
 
-<article>
+<article class="fruitCard">
     <a href={$url(`./${fruit.id}`)}><h5>{fruit.name}</h5></a>
-    <p>Color: {fruit.color.name}</p>
-    <p class:warning={fruit.amount < 4}>Cant.: {fruit.amount}</p>
-    <p>Id: {fruit.id}</p>
+    <p>
+        Color: <span class="fruitColor">{fruit.color.name}</span>
+    </p>
+    <p
+    class:warning={fruit.amount < 4}
+    >
+        Cant.: <span class="fruitAmount">{fruit.amount}</span>
+    </p>
+    <p>
+        Id: <span class="fruitId">{fruit.id}</span>
+    </p>
     <div class="buttons">
         <Button
         iconName={"trash"}
