@@ -7,7 +7,7 @@
     import { filterObj } from "../../../../utils/Logic";
     import EditFruitCard from "./EditFruitCard.svelte";
     import FruitCard from "./FruitCard.svelte";
-    const { updateFruitStore, deleteFruitStore } = indexStores;
+    const { updateFruitStore, deleteFruitStore, fruitListStore } = indexStores;
     export let fruits: Fruit[];
 
     let editing: Scalars["ID"][] = JSON.parse(localStorage.getItem("editing") as string) || [];
@@ -43,6 +43,7 @@
     const deleteFruitMutation = mutation(deleteFruitStore);
     function delFruit(fruitToDelete: DeleteFruitMutationVariables){
         deleteFruitMutation(fruitToDelete);
+        fruitListStore.reexecute()
     };
     function deleteFruit(e: CustomEvent){
         const id: Scalars["ID"] = e.detail;
@@ -54,22 +55,20 @@
         });
     };
 </script>
-<div>
-    {#each fruits as fruit (fruit.id)}
-        {#if editing.includes(fruit.id)}
-            <EditFruitCard
-            {fruit}
-            on:saveEdit={saveEdit}
-            on:undoEdit={() => undoEdit(fruit.id)}
-            />
-        {:else}
-            <FruitCard
-            {fruit}
-            on:deleteFruit={deleteFruit}
-            on:editMode={editMode}
-            />
-        {/if}
+{#each fruits as fruit (fruit.id)}
+    {#if editing.includes(fruit.id)}
+        <EditFruitCard
+        {fruit}
+        on:saveEdit={saveEdit}
+        on:undoEdit={() => undoEdit(fruit.id)}
+        />
     {:else}
-        <p>Todavía no hay frutas</p>
-    {/each}
-</div>
+        <FruitCard
+        {fruit}
+        on:deleteFruit={deleteFruit}
+        on:editMode={editMode}
+        />
+    {/if}
+{:else}
+    <p>Todavía no hay frutas</p>
+{/each}
