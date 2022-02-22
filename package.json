@@ -4,7 +4,7 @@
     "cov": "c8 -c=src/.c8rc npm run test",
     "cov:report": "c8 report --reporter=text-lcov > coverage.lcov",
     "dev": "routify -c dev:vite ",
-    "build": "svelte-check && routify -b && vite build",
+    "build": "routify -b && vite build",
     "dev:vite": "vite --host",
     "serve": "vite preview",
     "validate": "svelte-check",
